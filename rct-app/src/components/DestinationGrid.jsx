@@ -1,7 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from "react-router-dom";
 import Card from './Card';
 
 const DestinationGrid = ({ destinations, onEdit, onCardClick }) => {
+     const navigate = useNavigate();
+
+
+    const handleCardClick = (name) => {
+      navigate(`/destination/${name}`);
+    };
   return (
     <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)" }}>
       {destinations.map((destination) => (
@@ -9,7 +16,7 @@ const DestinationGrid = ({ destinations, onEdit, onCardClick }) => {
           key={destination.id}
           destination={destination}
           onEdit={() => onEdit(destination)}
-          onClick={onCardClick}
+          onClick={() => handleCardClick(destination.name)}
         />
       ))}
     </div>

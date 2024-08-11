@@ -1,7 +1,15 @@
-import React from 'react'
+import React from 'react';
+import { useParams, useNavigate } from "react-router-dom";
 
-const DetailView = ({ destination, onClose }) => {
-  const additionalImages = destination.additionalImages || [];
+const DetailView = ({ destinations}) => {
+
+  const { name} = useParams();
+  const navigate = useNavigate();
+  const destination = destinations.find((dest) => dest.name === name);
+ const additionalImages = destination.additionalImages || [];
+    if (!destination) {
+      return <div>Destination not found</div>;
+    }
 
   return (
     <div
@@ -17,7 +25,8 @@ const DetailView = ({ destination, onClose }) => {
         zIndex: "1000",
       }}
     >
-      <button onClick={onClose}>Close</button>
+      {/* <button onClick={onClose}>Close</button> */}
+      <button onClick={() => navigate(-1)}>Back</button>
       <h1>{destination.name}</h1>
       <h2>{destination.country}</h2>
       <img

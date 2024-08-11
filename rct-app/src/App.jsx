@@ -6,6 +6,7 @@ import Form from './components/Form';
 import DestinationGrid from './components/DestinationGrid';
 import DetailView from './components/DetailView';
 import axios from "axios";
+import {Routes,Route} from "react-router-dom";
 
 
 const fetchData = (setDestinations) => {
@@ -109,18 +110,60 @@ function App() {
    setShowForm(true);
  };
 
- const handleCardClick = (destination) => {
-   setSelectedDestination(destination);
- };
+//  const handleCardClick = (destination) => {
+//    setSelectedDestination(destination);
+//  };
 
- const handleCloseDetailView = () => {
-   setSelectedDestination(null);
- };
+//  const handleCloseDetailView = () => {
+//    setSelectedDestination(null);
+//  };
 
   return (
     <>
       <ThemeToggle theme={theme} setTheme={setTheme} />
-      <Filter
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <div>
+                <Filter
+                  countryFilter={countryFilter}
+                  setCountryFilter={setCountryFilter}
+                  budgetFilter={budgetFilter}
+                  setBudgetFilter={setBudgetFilter}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                />
+              </div>
+              <div>
+                <button onClick={() => setShowForm(true)}>
+                  Add New Destination
+                </button>
+              </div>
+              <div>
+                {showForm ? (
+                  <Form
+                    destination={updatingDestination}
+                    onSubmit={handleFormSubmit}
+                    onCancel={handleCancel}
+                  />
+                ) : (
+                  <DestinationGrid
+                    destinations={filterDestinations}
+                    onEdit={handleEdit}
+                  />
+                )}
+              </div>
+            </>
+          }
+        />
+        <Route
+          path="/destination/:name"
+          element={<DetailView destinations={destinations} />}
+        />
+      </Routes>
+      {/* <Filter
         countryFilter={countryFilter}
         setCountryFilter={setCountryFilter}
         budgetFilter={budgetFilter}
@@ -143,13 +186,13 @@ function App() {
           onEdit={handleEdit}
           onCardClick={handleCardClick}
         />
-      )}
-      {selectedDestination && (
+      )} */}
+      {/* {selectedDestination && (
         <DetailView
           destination={selectedDestination}
           onClose={handleCloseDetailView}
         />
-      )}
+      )} */}
     </>
   );
 }
