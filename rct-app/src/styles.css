@@ -1,0 +1,10 @@
+/* src/styles.css */
+body.dark {
+    background-color: black;
+    color: white;
+}
+
+body.light {
+    background-color: white;
+    color: black;
+}
